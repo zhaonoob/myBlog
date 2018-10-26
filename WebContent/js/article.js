@@ -61,15 +61,16 @@ layui.use(['form', 'layedit', "element"], function() {
       content: layedit.getContent(index)
     }
 
-    $.post("/article", data, (msg) => {
-      if(msg.status){
-        layer.alert('发表成功', (res) => {
-          location.href = "/"
-        })
-      }else{
-        layer.alert(`发表失败，失败信息：${msg.msg}`)
-      }
-    })
+//    $.post("article.do", data, (msg) => {
+//      if(msg.status){
+//        layer.alert('发表成功', (res) => {
+//          location.href = "/"
+//        })
+//      }else{
+//        layer.alert(`发表失败，失败信息：${msg.msg}`)
+//      }
+//    }
+//    )
   })
 
 

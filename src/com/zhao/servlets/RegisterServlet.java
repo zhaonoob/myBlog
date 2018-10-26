@@ -51,7 +51,10 @@ public class RegisterServlet extends HttpServlet {
 		}
 		else if(userDAO.insert(user) > 0) {
 			System.out.println("注册成功");
+			
+			user = userDAO.findByName(user.getUserName());
 			req.getSession().setAttribute("login", user);
+			System.out.println(user.toString());
 			res.sendRedirect("index.jsp");
 		}else {
 			System.out.println("注册失败");

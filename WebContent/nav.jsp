@@ -17,7 +17,7 @@
 				if(user != null){
 					out.println("<ul class='layui-nav blog-user'>");
 					out.println("<li class='layui-nav-item'><a href='#'>个人中心</a></li>");
-					out.println("<li class='layui-nav-item'><a href='#'><img class='layui-nav-img' src='img/default.jpg'><span>");
+					out.println("<li class='layui-nav-item'><a href='#'><img class='layui-nav-img' src='"+user.getAvator() +"'><span>");
 					out.println(user.getUserName());
 					out.println("</span></a><dl class='layui-nav-child'><dd><a href='logout.do'>退了</a></dd></dl></li>");
 					

@@ -18,7 +18,7 @@ public class UserDAO {
 			//获得连接
 			con = DBConnection.getConnection();
 			//创建Statement
-			String sql = "Insert into t_user(username,password,email,phone,qq,info) values(?,?,?,?,?,?)";
+			String sql = "Insert into t_user(username,password,email,phone,qq,info,avator) values(?,?,?,?,?,?,?)";
 			pstmt = con.prepareStatement(sql);
 			pstmt.setString(1, user.getUserName());
 			pstmt.setString(2, user.getPwd());
@@ -26,6 +26,7 @@ public class UserDAO {
 			pstmt.setString(4, user.getPhone());
 			pstmt.setString(5, user.getQq());
 			pstmt.setString(6, user.getInfo());
+			pstmt.setString(7, user.getAvator());
 			//执行sql语句，
 			int rows = pstmt.executeUpdate();
 			return rows;
@@ -49,7 +50,7 @@ public class UserDAO {
 			//获得连接
 			con = DBConnection.getConnection();
 			//创建Statement
-			String sql = "select username,password from t_user where username = ? and password = ?";
+			String sql = "select username from t_user where username = ? and password = ?";
 			
 			pstmt = con.prepareStatement(sql);
 			pstmt.setString(1, username);
@@ -60,7 +61,6 @@ public class UserDAO {
 			while(res.next()) {
 				user = new User();
 				user.setUserName(res.getString("username"));
-				user.setPwd(res.getString("password"));
 			}
 			
 			return user;
@@ -84,7 +84,7 @@ public class UserDAO {
 				//获得连接
 				con = DBConnection.getConnection();
 				//创建Statement
-				String sql = "select username,password from t_user where username = ?";
+				String sql = "select username,password,id from t_user where username = ?";
 				
 				pstmt = con.prepareStatement(sql);
 				pstmt.setString(1, username);
@@ -95,6 +95,7 @@ public class UserDAO {
 					user = new User();
 					user.setUserName(res.getString("username"));
 					user.setPwd(res.getString("password"));
+					user.setId(res.getInt("id"));
 				}
 				
 				return user;

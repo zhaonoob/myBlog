@@ -1,6 +1,7 @@
 package com.zhao.servlets;
 
 import java.io.IOException;
+
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -44,6 +45,8 @@ public class LoginServlet extends HttpServlet {
 			if(userDAO.findBy(userName, pwd) != null) {
 				System.out.println("用户"+userName+"登录成功！");
 				req.getSession().setAttribute("login", user);
+				System.out.println(user.toString());
+				
 				res.sendRedirect("index.jsp");
 			}else {
 				System.out.println("用户名密码错误，登录失败！");

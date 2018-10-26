@@ -53,7 +53,7 @@
 					</ul>
 					<div class="layui-form layui-form-content" id="editing">
 						<div class="layui-tab-item layui-show">
-							<form action="/article" method="POST">
+							<form action="article.do" method="POST">
 								<div class="layui-row layui-col-space15 layui-form-item">
 									<div class="layui-col-md3">
 										<label class="layui-form-label">文章分类</label>
@@ -62,7 +62,14 @@
 												<option value="nodejs">nodejs</option>
 												<option value="vue">vue</option>
 												<option value="react">react</option>
-												<option value="angular">angular</option></select>
+												<option value="angular">angular</option>
+												<option value="jsp">jsp</option>
+												<option value="java">java</option>
+												<option value="servlet">servlet</option>
+												<option value="js">js</option>
+												<option value="php">php</option>
+												<option value="python">python</option>
+											</select>
 										</div>
 									</div>
 									<div class="layui-col-md9">
@@ -75,14 +82,16 @@
 									</div>
 								</div>
 								<div class="layui-form-item layui-form-text">
-									<textarea style="display: none;" id="article-content"></textarea>
+									<textarea style="display: none;" id="article-content"
+										name="content"></textarea>
+								</div>
+								<div class="layui-form-item">
+									<button class="layui-btn" lay-filter="send" lay-submit>立即发布</button>
 								</div>
 							</form>
 						</div>
 					</div>
-					<div class="layui-form-item">
-						<button class="layui-btn" lay-filter="send" lay-submit>立即发布</button>
-					</div>
+
 				</div>
 			</div>
 		</div>

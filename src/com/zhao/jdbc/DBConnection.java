@@ -7,7 +7,7 @@ import java.sql.SQLException;
 import java.sql.Statement;
 
 public class DBConnection {
-	private static String url = "jdbc:mysql://localhost:3306/myblog?characterEncoding=utf8&useSSL=true";
+	private static String url = "jdbc:mysql://localhost:3306/myblog?characterEncoding=utf8&useSSL=true&useOldAliasMetadataBehavior=true";
 	private static String user = "root";
 	private static String pwd = "1234";
 	static{

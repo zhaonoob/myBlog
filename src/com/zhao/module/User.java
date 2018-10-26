@@ -1,12 +1,14 @@
 package com.zhao.module;
 
 public class User {
+	private int id;
 	private String userName;
 	private String pwd;
 	private String email;
 	private String phone;
 	private String qq;
 	private String info;
+	private String avator = "img/default.jpg";
 	
 	public User() {}
 	
@@ -23,6 +25,13 @@ public class User {
 		this.phone = phone;
 		this.qq = qq;
 		this.info = info;
+	}
+	public int getId() {
+		return id;
+	}
+
+	public void setId(int id) {
+		this.id = id;
 	}
 	
 	public String getEmail() {
@@ -60,9 +69,18 @@ public class User {
 	}
 	public void setPwd(String pwd) {
 		this.pwd = pwd;
-	}	
+	}
+
+	public String getAvator() {
+		return avator;
+	}
+
+	public void setAvator(String avator) {
+		this.avator = avator;
+	}
+
 	@Override
 	public String toString() {
-		return "User [userName=" + userName + ", pwd=" + pwd + "]";
-	}
+		return "User [id=" + id + ", userName=" + userName + ", pwd=" + pwd + "]";
+	}	
 }
