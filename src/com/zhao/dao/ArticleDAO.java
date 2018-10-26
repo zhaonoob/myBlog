@@ -6,8 +6,10 @@ import java.sql.ResultSet;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.sun.org.apache.bcel.internal.generic.ARETURN;
 import com.zhao.jdbc.DBConnection;
 import com.zhao.module.Article;
+import com.zhao.module.ArticleInfo;
 import com.zhao.module.ArticleType;
 
 public class ArticleDAO {
@@ -100,27 +102,27 @@ public class ArticleDAO {
 		}
 
 	// 查找数据库所有文章
-	public List<Article> findAll() {
+	public List<ArticleInfo> findAll() {
 		Connection con = null;
 		PreparedStatement pest = null;
 		ResultSet res = null;
 
 		try {
 			con = DBConnection.getConnection();
-			String sql = "select * from t_article";
+			String sql = "select title,content,pub_date,username,type,avator from t_article as a inner join t_user as b on a.user_id = b.id inner join t_articletype as c on a.articletype_id = c.id";
 			pest = con.prepareStatement(sql);
 
 			res = pest.executeQuery();
-			List<Article> articleList = new ArrayList<Article>();
-			Article article = null;
+			List<ArticleInfo> articleList = new ArrayList<ArticleInfo>();
+			ArticleInfo article = null;
 			while (res.next()) {
-				article = new Article();
-				article.setId(res.getInt("id"));
+				article = new ArticleInfo();
 				article.setTitle(res.getString("title"));
 				article.setContent(res.getString("content"));
 				article.setPub_date(res.getTimestamp("pub_date"));
-				article.setUser_id(res.getInt("user_id"));
-				article.setArticletype_id(res.getInt("articletype_id"));
+				article.setUserName(res.getString("username"));
+				article.setArticletype(res.getString("type"));
+				article.setAvator(res.getString("avator"));
 				
 				articleList.add(article);
 			}
