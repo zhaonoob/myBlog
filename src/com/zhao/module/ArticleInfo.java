@@ -5,12 +5,19 @@ import java.sql.Timestamp;
 
 @SuppressWarnings("serial")
 public class ArticleInfo implements Serializable {
+	private int id;
 	private String title;
 	private String content;
 	private Timestamp pub_date;
 	private String userName;
 	private String articletype;
 	private String avator;
+	public int getId() {
+		return id;
+	}
+	public void setId(int id) {
+		this.id = id;
+	}
 	public String getTitle() {
 		return title;
 	}
@@ -47,4 +54,9 @@ public class ArticleInfo implements Serializable {
 	public void setAvator(String avator) {
 		this.avator = avator;
 	}
+	@Override
+	public String toString() {
+		return "ArticleInfo [title=" + title + ", content=" + content + ", userName=" + userName + "]";
+	}
+	
 }

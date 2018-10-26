@@ -109,7 +109,7 @@ public class ArticleDAO {
 
 		try {
 			con = DBConnection.getConnection();
-			String sql = "select title,content,pub_date,username,type,avator from t_article as a inner join t_user as b on a.user_id = b.id inner join t_articletype as c on a.articletype_id = c.id";
+			String sql = "select article_id,title,pub_date,username,type,avator from t_article as a inner join t_user as b on a.user_id = b.id inner join t_articletype as c on a.articletype_id = c.id";
 			pest = con.prepareStatement(sql);
 
 			res = pest.executeQuery();
@@ -117,8 +117,8 @@ public class ArticleDAO {
 			ArticleInfo article = null;
 			while (res.next()) {
 				article = new ArticleInfo();
+				article.setId(res.getInt("article_id"));
 				article.setTitle(res.getString("title"));
-				article.setContent(res.getString("content"));
 				article.setPub_date(res.getTimestamp("pub_date"));
 				article.setUserName(res.getString("username"));
 				article.setArticletype(res.getString("type"));
@@ -127,6 +127,39 @@ public class ArticleDAO {
 				articleList.add(article);
 			}
 			return articleList;
+
+		} catch (Exception e) {
+			// TODO: handle exception
+			e.printStackTrace();
+			return null;
+		} finally {
+			DBConnection.close(con, pest, res);
+		}
+	}
+	
+	// 根据文章编号查找文章信息
+	public ArticleInfo findArticleById(int article_id) {
+		Connection con = null;
+		PreparedStatement pest = null;
+		ResultSet res = null;
+
+		try {
+			con = DBConnection.getConnection();
+			String sql = "select title,content,pub_date,username,type,avator from t_article as a inner join t_user as b on a.user_id = b.id inner join t_articletype as c on a.articletype_id = c.id where article_id = ?";
+			pest = con.prepareStatement(sql);
+			pest.setInt(1, article_id);
+
+			res = pest.executeQuery();
+			ArticleInfo article = null;
+			while (res.next()) {
+				article = new ArticleInfo();
+				article.setTitle(res.getString("title"));
+				article.setContent(res.getString("content"));
+				article.setPub_date(res.getTimestamp("pub_date"));
+				article.setUserName(res.getString("username"));
+				article.setArticletype(res.getString("type"));
+			}
+			return article;
 
 		} catch (Exception e) {
 			// TODO: handle exception

@@ -1,7 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 
-
 <!DOCTYPE html>
 <html>
 <head>
@@ -48,13 +47,15 @@
 	<!-- 后台管理主体部分-->
 	<div class="layui-body">
 		<table class="layui-table"
-			lay-data="{width: 892, url:'/user/articles', page:true, id:'idTest'}"
+			lay-data="{ url:'/user/comments', page:true, id:'idTest'}"
 			lay-filter="demo">
 			<thead>
 				<tr>
-					<th lay-data="{field:'title', align:'center'}">文章</th>
-					<th lay-data="{field:'tips', align:'center'}">分类</th>
-					<th lay-data="{field:'commentNum', align:'center'}">评论数</th>
+					<th
+						lay-data="{field:'article', align:'center', templet: res =&gt; res.article.title}">被评文章</th>
+					<th lay-data="{field:'content', align:'center'}">评论内容</th>
+					<th
+						lay-data="{field:'created', align:'center', templet: res =&gt; (new Date(res.created)).toLocaleString()}">评论时间</th>
 					<th
 						lay-data="{fixed: 'right', width:178, align:'center', toolbar: '#barDemo'}">操作</th>
 				</tr>
@@ -68,16 +69,21 @@
   
   table.on("tool(demo)", (obj) => {
     const data = obj.data
-    const _id = data._id
-    //console.log(data)
+    // 评论id
+    const commentId = data._id
+    // 文章id
+    const articleId = data.article._id
+
+
     if(obj.event !== "del") return
 
     layer.confirm("确认删除？", () => {
       $.ajax({
         method: "delete",
-        url: "/article/" + _id,
+        url: "/comment/" + commentId,
         data: {
-          _id
+          // 发送文章id值，减少后台查询
+          articleId
         },
         success(res){
           if(res.state){
@@ -92,7 +98,7 @@
       })
     })
   })
-});</script>
+})</script>
 	</div>
 	<script>layui.use('element', function(){
   var element = layui.element;

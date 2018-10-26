@@ -1,7 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 
-
 <!DOCTYPE html>
 <html>
 <head>
@@ -26,11 +25,11 @@
 	<div class="blog-header layui-bg-black">
 		<div class="layui-container">
 			<ul class="layui-nav">
-				<li class="layui-nav-item" id="haha"><a href="/"><i
+				<li class="layui-nav-item" id="haha"><a href="index.jsp"><i
 						class="layui-icon layui-icon-home"> </i>首页</a></li>
 			</ul>
 			<ul class="layui-nav blog-user">
-				<li class="layui-nav-item"><a href="/user/logout">退了</a></li>
+				<li class="layui-nav-item"><a href="logout.do">退了</a></li>
 			</ul>
 		</div>
 	</div>
@@ -38,23 +37,24 @@
 	<div class="layui-side layui-bg-black">
 		<div class="layui-side-scroll">
 			<ul class="layui-nav layui-nav-tree" lay-filter="list">
-				<li class="layui-nav-item"><a href="/admin/user">用户管理</a></li>
-				<li class="layui-nav-item"><a href="/admin/article">文章管理</a></li>
-				<li class="layui-nav-item"><a href="/admin/comment">评论管理</a></li>
-				<li class="layui-nav-item"><a href="/admin/userface">头像上传</a></li>
+				<li class="layui-nav-item"><a href="user.jsp">用户管理</a></li>
+				<li class="layui-nav-item"><a href="article.jsp">文章管理</a></li>
+				<li class="layui-nav-item"><a href="comment.jsp">评论管理</a></li>
+				<li class="layui-nav-item"><a href="#">头像上传</a></li>
 			</ul>
 		</div>
 	</div>
 	<!-- 后台管理主体部分-->
 	<div class="layui-body">
 		<table class="layui-table"
-			lay-data="{width: 892, url:'/user/articles', page:true, id:'idTest'}"
+			lay-data="{url:'/user/users', page:true, id:'idTest'}"
 			lay-filter="demo">
 			<thead>
 				<tr>
-					<th lay-data="{field:'title', align:'center'}">文章</th>
-					<th lay-data="{field:'tips', align:'center'}">分类</th>
-					<th lay-data="{field:'commentNum', align:'center'}">评论数</th>
+					<th lay-data="{field:'username', align:'center'}">用户名</th>
+					<th lay-data="{field:'role', align:'center'}">权限</th>
+					<th lay-data="{field:'articleCount', align:'center'}">文章数量</th>
+					<th lay-data="{field:'commentCount', align:'center'}">评论数量</th>
 					<th
 						lay-data="{fixed: 'right', width:178, align:'center', toolbar: '#barDemo'}">操作</th>
 				</tr>

@@ -9,20 +9,15 @@
 <!DOCTYPE html>
 <html>
 <head>
-<title>博客首页</title>
+<title>文章详情</title>
 <meta charset="utf-8">
 <link rel="stylesheet" href="./layui/css/layui.css">
 <link rel="stylesheet" href="./css/nav.css">
 <link rel="stylesheet" href="./css/index.css">
+<link rel="stylesheet" href="./css/article.css">
 <script src="./layui/layui.js"></script>
 </head>
 <body>
-	<%
-		ArticleDAO articleDAO = new ArticleDAO();
-		List<ArticleInfo> articleList = articleDAO.findAll();
-		
-		session.setAttribute("articleList", articleList);
-	%>
 	<jsp:include page="nav.jsp"></jsp:include>
 	<div class="blog-panel">
 		<div class="layui-container">
@@ -35,6 +30,7 @@
 			</ul>
 			<div class="blog-column-right">
 				<%
+					ArticleInfo article = (ArticleInfo)session.getAttribute("showArticle");
 					User user = (User)session.getAttribute("login");
 					if(user != null){
 						out.println("<a class='layui-btn' href='pub_article.jsp'>发表文章</a>");
@@ -48,29 +44,24 @@
 	<div class="layui-container">
 		<div class="layui-row layui-col-space15">
 			<div class="layui-col-md8">
-				<ul class="article-list">
-					<c:forEach var="item" items="${articleList}">
-						<li>
-							<a class="list-face">
-								<img
-								src="${item.avator }"
-								alt="{&quot;avatar&quot;:&quot;/avatar/1540448450317.png&quot;,&quot;_id&quot;:&quot;5bd160a4ebf79061c4c04155&quot;,&quot;username&quot;:&quot;aaa&quot;}">
-							</a>
-							<h2>
-								<a class="layui-badge">${item.articletype }</a><a class="articlt-title ellipsis"
-									href="showArticle.do?id=${item.id }">${ item.title}</a>
-							</h2>
-							<div class="list-info">
-								<a>${item.userName }</a>
-								<span>
-									<fmt:formatDate value="${item.pub_date}" pattern="yyyy-MM-dd HH:mm:ss"/>
-								</span>
-								<span class="list-reply"><i class="layui-icon layui-icon-file-b" title="评论"></i>0</span>
-							</div>
-						</li>
-					</c:forEach>
-				</ul>
-				<div id="laypage" data-maxNum="2"></div>
+				<div class="content default-box layui-text">
+					<h1 class="art-title text-center"
+						data-artid="5bd1b769ebf79061c4c04157"><%=article.getTitle() %></h1>
+					<div class="other-info text-center">
+						<span><%=article.getUserName() %></span><span>&nbsp;&nbsp;发表于：</span><span><fmt:formatDate value="<%=article.getPub_date() %>" pattern="yyyy-MM-dd HH:mm:ss"/></span><span>&nbsp;分类：</span><span><%=article.getArticletype() %></span>
+					</div>
+					<div class="article-detail" style="padding: 10px;"><%=article.getContent() %></div>
+				</div>
+				<div class="comment default-box">
+					<fieldset class="text-center">
+						<legend>评论</legend>
+					</fieldset>
+					<div class="txt">
+						<textarea id="comment-txt"></textarea>
+						<button class="layui-btn">回复</button>
+					</div>
+					<ul class="comment-list"></ul>
+				</div>
 			</div>
 			<div class="layui-col-md4">
 				<div class="layui-card">
@@ -84,5 +75,6 @@
 	</div>
 	<jsp:include page="footer.jsp"></jsp:include>
 	<script src="./js/index.js"></script>
+	<script src="./js/article.js"></script>
 </body>
 </html>
