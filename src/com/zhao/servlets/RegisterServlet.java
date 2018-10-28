@@ -35,7 +35,8 @@ public class RegisterServlet extends HttpServlet {
 		req.setCharacterEncoding("utf-8");
 		res.setContentType("text/html;charset=utf-8");
 		PrintWriter out = res.getWriter();
-		
+		out.println("<script src='layer/jquery-1.10.2.js'></script>");
+		out.println("<script src='layer/layer.js'></script>");
 		String userName = req.getParameter("username");
 		String pwd = req.getParameter("password");
 		String email = req.getParameter("email");
@@ -49,9 +50,8 @@ public class RegisterServlet extends HttpServlet {
 		UserDAO userDAO = new UserDAO();
 		
 		if(userDAO.findByName(userName) != null) {
-			System.out.println("用户已注册！即将跳到登录界面");
-			out.println("<script>alert(\"用户已注册！去登录界面登陆!\")</script>");
-			res.setHeader("refresh", "0,URL=UserLogin.jsp");
+			out.println("<script>layer.alert('用户已注册！去登录界面登陆!',{'icon': 5})</script>");
+			res.setHeader("refresh", "3,URL=UserLogin.jsp");
 		}
 		else if(userDAO.insert(user) > 0) {
 			System.out.println("注册成功");

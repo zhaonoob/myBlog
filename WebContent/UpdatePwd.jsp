@@ -42,7 +42,7 @@
               <div class="layui-form-item">
                 <label class="layui-form-label">当前密码</label>
                 <div class="layui-input-inline">
-                  <input type="password" name="oldPassword" lay-verify="required" lay-verType="tips" class="layui-input">
+                  <input type="password" name="oldPassword" lay-verify="oldPassword" lay-verType="tips" class="layui-input">
                 </div>
               </div>
               <div class="layui-form-item">
@@ -50,12 +50,18 @@
                 <div class="layui-input-inline">
                   <input type="password" name="password" lay-verify="pass" lay-verType="tips" autocomplete="off" id="LAY_password" class="layui-input">
                 </div>
-                <div class="layui-form-mid layui-word-aux">6到16个字符</div>
+                <div class="layui-form-mid layui-word-aux">4到12个字符</div>
               </div>
               <div class="layui-form-item">
                 <label class="layui-form-label">确认新密码</label>
                 <div class="layui-input-inline">
                   <input type="password" name="repassword" lay-verify="repass" lay-verType="tips" autocomplete="off" class="layui-input">
+                </div>
+              </div>
+              <div class="layui-form-item" style="display: none;">
+                <label class="layui-form-label" style="display: none;"></label>
+                <div class="layui-input-inline" style="display: none;">
+                  <input type="password" value="<%=user.getPwd() %>" name="isOldPwd" lay-verify="isOldPwd" lay-verType="tips" autocomplete="off" class="layui-input" style="display: none;">
                 </div>
               </div>
               <div class="layui-form-item">
@@ -77,13 +83,30 @@
   
   //自定义验证规则
   form.verify({
-    pass: [/(.+){4,12}$/, '密码必须4到12位']
+    pass: function(value){
+    	const oldPwd = $("input[name='oldPassword']").val();
+    	if(value==""){
+    		return "不能为空！"
+    	}
+    	else if(oldPwd==value){
+    		return "新密码与旧密码最好不能相同！"
+    	}
+    }
     ,repass:function(value){
         var pvalue = $("input[name='password']").val();
         if(pvalue!=value){
             return "两次输入的密码不一致";
         }
-    }
+    },
+    oldPassword: function(value){
+		  const oldPwd = $("input[name='isOldPwd']").val();
+		  if(value == ""){
+			  return "请输入当前密码！"
+		  }
+		  else if(oldPwd!=value){
+			  return "当前密码错误！"
+		  }
+	  }
   }); 
 
   $("a").each((i, v) => {

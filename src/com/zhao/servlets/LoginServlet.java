@@ -1,6 +1,7 @@
 package com.zhao.servlets;
 
 import java.io.IOException;
+import java.io.PrintWriter;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -33,7 +34,9 @@ public class LoginServlet extends HttpServlet {
 		// TODO Auto-generated method stub
 		req.setCharacterEncoding("utf-8");
 		res.setContentType("text/html;charset=utf-8");
-		
+		PrintWriter out = res.getWriter();
+		out.println("<script src='layer/jquery-1.10.2.js'></script>");
+		out.println("<script src='layer/layer.js'></script>");
 		String userName = req.getParameter("username");
 		String pwd = req.getParameter("password");
 		
@@ -49,13 +52,17 @@ public class LoginServlet extends HttpServlet {
 				
 				res.sendRedirect("index.jsp");
 			}else {
-				System.out.println("密码错误，登录失败！");
-				res.sendRedirect("UserLogin.jsp");
+				out.println("<script>layer.alert('密码错误，请重新输入',{'icon': 5})</script>");
+				res.setHeader("refresh", "3,URL=UserLogin.jsp");
+				//res.sendRedirect("UserLogin.jsp");
 			}
 			
 		}else {
+			out.println("<script>layer.alert('用户不存在，去注册用户！',{'icon': 5})</script>");
+			
 			System.out.println("用户"+userName+"不存在，请注册用户！");
-			res.sendRedirect("UserReg.jsp");
+			res.setHeader("refresh", "3,URL=UserReg.jsp");
+			//res.sendRedirect("UserReg.jsp");
 		}
 	}
 

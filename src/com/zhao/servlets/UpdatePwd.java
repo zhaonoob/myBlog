@@ -43,9 +43,11 @@ public class UpdatePwd extends HttpServlet {
 		
 		int uid = user.getId();
 		String oldPwd = req.getParameter("oldPassword");
-		if(oldPwd != user.getPwd()) {
-			out.println("<script>alert(\"当前密码错误,请重新输入!\")</script>");
-			res.setHeader("refresh", "0,URL=UpdatePwd.jsp");
+		out.println("<script src='layer/jquery-1.10.2.js'></script>");
+		out.println("<script src='layer/layer.js'></script>");
+		if(!oldPwd.equalsIgnoreCase(user.getPwd())) {
+			out.println("<script>layer.alert('当前密码错误',{'icon': 5})</script>");
+			res.setHeader("refresh", "1,URL=UpdatePwd.jsp");
 		}else {
 			String newPwd = req.getParameter("password");
 			
@@ -56,7 +58,9 @@ public class UpdatePwd extends HttpServlet {
 			UserDAO userDAO = new UserDAO();
 			if(userDAO.updatePwd(newUser) > 0) {
 				session.invalidate();
-				res.sendRedirect("UserLogin.jsp");
+				out.println("<script>layer.alert('修改成功，请重新登陆！',{'icon': 6})</script>");
+				res.setHeader("refresh", "3,URL=UserLogin.jsp");
+				//res.sendRedirect("UserLogin.jsp");
 			}else {
 				System.out.println("修改密码失败！");
 				res.sendRedirect("index.jsp");

@@ -47,7 +47,7 @@
 								<label class="layui-form-label">email</label>
 								<div class="layui-input-inline">
 									<input class="layui-input" type="email" name="email"
-										required lay-verify="required" placeholder="请输入邮箱">
+										required lay-verify="email" placeholder="请输入邮箱">
 								</div>
 							</div>
 							<div class="layui-form-item">
@@ -61,7 +61,7 @@
 								<label class="layui-form-label">QQ</label>
 								<div class="layui-input-inline">
 									<input class="layui-input" type="number" name="qq"
-										 lay-verify="" placeholder="请输入Q  Q号码(非必填)">
+										 lay-verify="qq" placeholder="请输入Q  Q号码(非必填)">
 								</div>
 							</div>
 							<div class="layui-form-item">
@@ -91,7 +91,7 @@
 
 			  //自定义验证规则
 			  form.verify({
-			    pass: [/(.+){4,12}$/, '密码必须4到12位']
+			    pass: [/(.+){3,12}$/, '密码必须4到12位']
 			    ,repass:function(value){
 			        var pvalue = $("input[name='password']").val();
 			        if(pvalue!=value){

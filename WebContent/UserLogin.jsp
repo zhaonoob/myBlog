@@ -50,5 +50,16 @@
 		</div>
 	</div>
 	<jsp:include page="footer.jsp"></jsp:include>
+	<script type="text/javascript">	
+		layui.use(['form'], function(){
+			  const form = layui.form;
+			  const $ = layui.$
+
+			  //自定义验证规则
+			  form.verify({
+			  }); 
+			  
+			});
+	</script>
 </body>
 </html>

@@ -41,7 +41,8 @@ public class UpdateUserInfo extends HttpServlet {
 		HttpSession session = req.getSession();
 		User user = (User)session.getAttribute("login");
 		UserDAO userDAO = new UserDAO();
-		
+		out.println("<script src='layer/jquery-1.10.2.js'></script>");
+		out.println("<script src='layer/layer.js'></script>");
 		int uid = user.getId();
 		String userName = req.getParameter("username");
 		String phone = req.getParameter("phone");
@@ -86,8 +87,8 @@ public class UpdateUserInfo extends HttpServlet {
 				res.sendRedirect("index.jsp");
 			}
 		}else {
-			out.println("<script>alert(\"用户名已被占用，请重新输入!\")</script>");
-			res.setHeader("refresh", "0,URL=user.jsp");
+			out.println("<script>layer.alert('用户名已被占用，请重新输入!',{'icon': 5})</script>");
+			res.setHeader("refresh", "3,URL=user.jsp");
 		}	
 	}
 }

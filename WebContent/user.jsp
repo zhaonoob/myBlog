@@ -42,13 +42,13 @@
               <div class="layui-form-item">
                 <label class="layui-form-label">用户名</label>
                 <div class="layui-input-inline">
-                  <input type="text" name="username" value="<%=user.getUserName() %>" lay-verify="username" autocomplete="off" placeholder="请输入用户名" class="layui-input">
+                  <input type="text" name="username" value="<%=user.getUserName() %>" lay-verify="required" autocomplete="off" placeholder="请输入用户名" class="layui-input">
                 </div>
               </div>
               <div class="layui-form-item">
                 <label class="layui-form-label">手机</label>
                 <div class="layui-input-inline">
-                  <input type="number" name="phone" value="<%=user.getPhone() %>" lay-verify="phone" autocomplete="off" class="layui-input" placeholder="请输入手机号码">
+                  <input type="number" name="phone" value="<%=user.getPhone() %>" lay-verify="" autocomplete="off" class="layui-input" placeholder="请输入手机号码">
                 </div>
               </div>
               <div class="layui-form-item">
@@ -95,10 +95,36 @@
       </div>
     </div>
   </div>
-  <script>layui.use('element', function(){
+  <script>layui.use(['element','form'], function(){
   var element = layui.element;
   const $ = layui.$
-
+//自定义验证规则
+  form.verify({
+    pass: function(value){
+    	const oldPwd = $("input[name='oldPassword']").val();
+    	if(value==""){
+    		return "不能为空！"
+    	}
+    	else if(oldPwd==value){
+    		return "新密码与旧密码最好不能相同！"
+    	}
+    }
+    ,repass:function(value){
+        var pvalue = $("input[name='password']").val();
+        if(pvalue!=value){
+            return "两次输入的密码不一致";
+        }
+    },
+    oldPassword: function(value){
+		  const oldPwd = $("input[name='isOldPwd']").val();
+		  if(value == ""){
+			  return "请输入当前密码！"
+		  }
+		  else if(oldPwd!=value){
+			  return "当前密码错误！"
+		  }
+	  }
+  }); 
   $("a").each((i, v) => {
     const a_href = $(v).prop('href')
 
