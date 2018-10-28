@@ -8,7 +8,7 @@ public class User {
 	private String phone;
 	private String qq;
 	private String info;
-	private String avator = "img/default.jpg";
+	private String avator;
 	
 	public User() {}
 	
@@ -81,6 +81,8 @@ public class User {
 
 	@Override
 	public String toString() {
-		return "User [id=" + id + ", userName=" + userName + ", pwd=" + pwd + "]";
-	}	
+		return "User [id=" + id + ", userName=" + userName + ", pwd=" + pwd + ", email=" + email + ", phone=" + phone
+				+ ", qq=" + qq + ", info=" + info + ", avator=" + avator + "]";
+	}
+	
 }

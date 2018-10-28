@@ -27,11 +27,11 @@
 	<div class="blog-panel">
 		<div class="layui-container">
 			<ul class="layui-clear">
-				<li><a href="#">HTML</a></li>
-				<li><a href="#">HTML</a></li>
-				<li><a href="#">HTML</a></li>
-				<li><a href="#">HTML</a></li>
-				<li><a href="#">HTML</a></li>
+				<li><a href="#">最新</a></li>
+				<li><a href="#">热门</a></li>
+				<li><a href="#">推荐</a></li>
+				<li><a href="#">话题</a></li>
+				<li><a href="#">我的</a></li>
 			</ul>
 			<div class="blog-column-right">
 				<%

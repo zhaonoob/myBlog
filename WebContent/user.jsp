@@ -1,6 +1,6 @@
+<%@page import="com.zhao.module.User"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
-
 <!DOCTYPE html>
 <html>
 <head>
@@ -9,6 +9,7 @@
 <meta name="author" content="fengyu">
 <link rel="stylesheet" href="./layui/css/layui.css">
 <link rel="stylesheet" href="./css/nav.css">
+<link rel="stylesheet" href="./css/admin1.css" media="all">
 <script src="./layui/layui.js"></script>
 <style>
 .layui-side, .layui-body {
@@ -18,83 +19,83 @@
 .layui-body {
 	padding: 15px;
 }
+.user-avator{
+	margin-bottom: 10px;
+}
+
 </style>
 </head>
 <body>
-	<!-- 导航-->
-	<div class="blog-header layui-bg-black">
-		<div class="layui-container">
-			<ul class="layui-nav">
-				<li class="layui-nav-item" id="haha"><a href="index.jsp"><i
-						class="layui-icon layui-icon-home"> </i>首页</a></li>
-			</ul>
-			<ul class="layui-nav blog-user">
-				<li class="layui-nav-item"><a href="logout.do">退了</a></li>
-			</ul>
-		</div>
-	</div>
-	<!-- 左侧导航-->
-	<div class="layui-side layui-bg-black">
-		<div class="layui-side-scroll">
-			<ul class="layui-nav layui-nav-tree" lay-filter="list">
-				<li class="layui-nav-item"><a href="user.jsp">用户管理</a></li>
-				<li class="layui-nav-item"><a href="article.jsp">文章管理</a></li>
-				<li class="layui-nav-item"><a href="comment.jsp">评论管理</a></li>
-				<li class="layui-nav-item"><a href="#">头像上传</a></li>
-			</ul>
-		</div>
-	</div>
+	<%
+		User user = (User)session.getAttribute("login");
+	%>
+	<jsp:include page="sidebar.jsp"></jsp:include>
 	<!-- 后台管理主体部分-->
 	<div class="layui-body">
-		<table class="layui-table"
-			lay-data="{url:'/user/users', page:true, id:'idTest'}"
-			lay-filter="demo">
-			<thead>
-				<tr>
-					<th lay-data="{field:'username', align:'center'}">用户名</th>
-					<th lay-data="{field:'role', align:'center'}">权限</th>
-					<th lay-data="{field:'articleCount', align:'center'}">文章数量</th>
-					<th lay-data="{field:'commentCount', align:'center'}">评论数量</th>
-					<th
-						lay-data="{fixed: 'right', width:178, align:'center', toolbar: '#barDemo'}">操作</th>
-				</tr>
-			</thead>
-		</table>
-		<script type="text/html" id="barDemo"><a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="del">删除</a></script>
-		<script>layui.use(['table', 'layer'], function(){
-  const table = layui.table
-  const layer = layui.layer
-  const $ = layui.$
-  
-  table.on("tool(demo)", (obj) => {
-    const data = obj.data
-    const _id = data._id
-    //console.log(data)
-    if(obj.event !== "del") return
-
-    layer.confirm("确认删除？", () => {
-      $.ajax({
-        method: "delete",
-        url: "/article/" + _id,
-        data: {
-          _id
-        },
-        success(res){
-          if(res.state){
-            layer.msg(res.message, {
-              anim: 1,
-              time: 800
-            }, () => location.reload())
-          }else{
-            console.error(res.message)
-          }
-        }
-      })
-    })
-  })
-});</script>
-	</div>
-	<script>layui.use('element', function(){
+    <div class="layui-row layui-col-space15">
+      <div class="layui-col-md12">
+        <div class="layui-card">
+          <div class="layui-card-header">设置我的资料</div>
+          <div class="layui-card-body" pad15>
+            <form action="updateInfo.do" method="post">
+            <div class="layui-form" lay-filter="">
+              <div class="layui-form-item">
+                <label class="layui-form-label">用户名</label>
+                <div class="layui-input-inline">
+                  <input type="text" name="username" value="<%=user.getUserName() %>" lay-verify="username" autocomplete="off" placeholder="请输入用户名" class="layui-input">
+                </div>
+              </div>
+              <div class="layui-form-item">
+                <label class="layui-form-label">手机</label>
+                <div class="layui-input-inline">
+                  <input type="number" name="phone" value="<%=user.getPhone() %>" lay-verify="phone" autocomplete="off" class="layui-input" placeholder="请输入手机号码">
+                </div>
+              </div>
+              <div class="layui-form-item">
+                <label class="layui-form-label">邮箱</label>
+                <div class="layui-input-inline">
+                  <input type="text" name="email" value="<%=user.getEmail() %>" lay-verify="email" autocomplete="off" class="layui-input" placeholder="请输入邮箱地址">
+                </div>
+              </div>
+              <div class="layui-form-item">
+                <label class="layui-form-label">QQ</label>
+                <div class="layui-input-inline">
+                  <input type="number" name="qq" value="<%=user.getQq() %>" lay-verify="qq" autocomplete="off" class="layui-input" placeholder="请输入qq号码">
+                </div>
+              </div>
+              <div class="layui-form-item">
+                <label class="layui-form-label">头像</label>
+                <div class="layui-input-inline">
+                  <input name="avator" lay-verify="required" id="LAY_avatarSrc" placeholder="图片地址" value="<%=user.getAvator() %>" class="layui-input">
+                </div>
+                <div class="layui-input-inline layui-btn-container" style="width: auto;">
+                  <button type="button" class="layui-btn layui-btn-primary" id="LAY_avatarUpload">
+                    <i class="layui-icon">&#xe67c;</i>上传图片
+                  </button>
+                  <img alt="avator" src="<%=user.getAvator() %>" class="user-avator layui-nav-img">
+                  
+                </div>
+             </div>
+              <div class="layui-form-item layui-form-text">
+                <label class="layui-form-label">备注</label>
+                <div class="layui-input-block">
+                  <textarea name="info" placeholder="请输入内容" class="layui-textarea"><%=user.getInfo() %></textarea>
+                </div>
+              </div>
+              <div class="layui-form-item">
+                <div class="layui-input-block">
+                  <button class="layui-btn" lay-submit lay-filter="setmyinfo">确认修改</button>
+                  <button type="reset" class="layui-btn layui-btn-primary">重新填写</button>
+                </div>
+              </div>
+            </div>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <script>layui.use('element', function(){
   var element = layui.element;
   const $ = layui.$
 

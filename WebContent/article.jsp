@@ -22,33 +22,11 @@
 </style>
 </head>
 <body>
-	<!-- 导航-->
-	<div class="blog-header layui-bg-black">
-		<div class="layui-container">
-			<ul class="layui-nav">
-				<li class="layui-nav-item" id="haha"><a href="/"><i
-						class="layui-icon layui-icon-home"> </i>首页</a></li>
-			</ul>
-			<ul class="layui-nav blog-user">
-				<li class="layui-nav-item"><a href="/user/logout">退了</a></li>
-			</ul>
-		</div>
-	</div>
-	<!-- 左侧导航-->
-	<div class="layui-side layui-bg-black">
-		<div class="layui-side-scroll">
-			<ul class="layui-nav layui-nav-tree" lay-filter="list">
-				<li class="layui-nav-item"><a href="/admin/user">用户管理</a></li>
-				<li class="layui-nav-item"><a href="/admin/article">文章管理</a></li>
-				<li class="layui-nav-item"><a href="/admin/comment">评论管理</a></li>
-				<li class="layui-nav-item"><a href="/admin/userface">头像上传</a></li>
-			</ul>
-		</div>
-	</div>
+	<jsp:include page="sidebar.jsp"></jsp:include>
 	<!-- 后台管理主体部分-->
 	<div class="layui-body">
 		<table class="layui-table"
-			lay-data="{width: 892, url:'/user/articles', page:true, id:'idTest'}"
+			
 			lay-filter="demo">
 			<thead>
 				<tr>
@@ -59,6 +37,14 @@
 						lay-data="{fixed: 'right', width:178, align:'center', toolbar: '#barDemo'}">操作</th>
 				</tr>
 			</thead>
+			<tbody>
+				<tr>
+					<th>sgdgsd</th>
+					<th>vue</th>
+					<th>2</th>
+					<th>删除</th>
+				</tr>
+			</tbody>
 		</table>
 		<script type="text/html" id="barDemo"><a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="del">删除</a></script>
 		<script>layui.use(['table', 'layer'], function(){

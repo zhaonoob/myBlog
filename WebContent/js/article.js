@@ -44,16 +44,22 @@ layui.use(['form', 'layedit', "element"], function() {
   const layedit = layui.layedit;
   const $ = layui.$
 
-  const index = layedit.build('article-content', {
-    hideTool: [
-      'image' //插入图片
-    ]
+  layedit.set({
+	  uploadImage: {
+	    url: 'imageUpload.do' //接口url
+	  }
+	});
+  const index = layedit.build('article-content',{
+	  height: 500
   }); //建立编辑器
 
   form.on("submit(send)", (res) => {
     const { tips, title } = res.field
 
-    if(layedit.getText(index).trim().length === 0)return layer.alert("请输入内容")
+    if(layedit.getText(index).trim().length === 0){
+    	layer.alert("请输入内容");
+    	return false;
+    }
     
     const data = {
       tips,

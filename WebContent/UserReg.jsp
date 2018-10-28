@@ -33,14 +33,14 @@
 								<label class="layui-form-label">密码</label>
 								<div class="layui-input-inline">
 									<input class="layui-input" type="password" name="password"
-										required="required" lay-verify="required" placeholder="请输入密码" id="pwd"/>
+										required="required" lay-verify="pass" placeholder="请输入密码" />
 								</div>
 							</div>
 							<div class="layui-form-item">
 								<label class="layui-form-label">确认密码</label>
 								<div class="layui-input-inline">
 									<input class="layui-input" type="password" name="confirmPWD"
-										required lay-verify="required" placeholder="请确认密码" id="confirmPWD">
+										required lay-verify="repass" placeholder="请确认密码">
 								</div>
 							</div>
 							<div class="layui-form-item">
@@ -54,18 +54,18 @@
 								<label class="layui-form-label">phone</label>
 								<div class="layui-input-inline">
 									<input class="layui-input" type="number" name="phone"
-										 lay-verify="required" placeholder="请输入电话号码(非必填)">
+										 lay-verify="" placeholder="请输入电话号码(非必填)">
 								</div>
 							</div>
 							<div class="layui-form-item">
 								<label class="layui-form-label">QQ</label>
 								<div class="layui-input-inline">
 									<input class="layui-input" type="number" name="qq"
-										 lay-verify="required" placeholder="请输入Q  Q号码(非必填)">
+										 lay-verify="" placeholder="请输入Q  Q号码(非必填)">
 								</div>
 							</div>
 							<div class="layui-form-item">
-								<label class="layui-form-label">自我介绍</label>
+								<label class="layui-form-label">备注</label>
 								<div class="layui-input-inline">
 									<textarea class="layui-textarea" rows="10" placeholder="说点什么吧..." name="self-info"></textarea>
 								</div>
@@ -85,17 +85,22 @@
 	</div>
 	<jsp:include page="footer.jsp"></jsp:include>
 	<script type="text/javascript">	
-		function check(){
-			if(pwd.value !== confirmPWD.value){
-				alert("两次输入的密码不一致，请重新输入！");
-				pwd.value = "";
-				pwd.focus();
-				confirmPWD.value = "";
-				return false;
-			}else{
-				return true;
-			}
-		}			
+		layui.use(['form'], function(){
+			  const form = layui.form;
+			  const $ = layui.$
+
+			  //自定义验证规则
+			  form.verify({
+			    pass: [/(.+){4,12}$/, '密码必须4到12位']
+			    ,repass:function(value){
+			        var pvalue = $("input[name='password']").val();
+			        if(pvalue!=value){
+			            return "两次输入的密码不一致";
+			        }
+			    }
+			  }); 
+			  
+			});
 	</script>
 </body>
 </html>

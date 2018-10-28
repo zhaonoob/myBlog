@@ -49,7 +49,7 @@ public class LoginServlet extends HttpServlet {
 				
 				res.sendRedirect("index.jsp");
 			}else {
-				System.out.println("用户名密码错误，登录失败！");
+				System.out.println("密码错误，登录失败！");
 				res.sendRedirect("UserLogin.jsp");
 			}
 			

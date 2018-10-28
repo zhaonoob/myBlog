@@ -1,6 +1,8 @@
 package com.zhao.servlets;
 
 import java.io.IOException;
+import java.io.PrintWriter;
+
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -32,6 +34,7 @@ public class RegisterServlet extends HttpServlet {
 		// TODO Auto-generated method stub
 		req.setCharacterEncoding("utf-8");
 		res.setContentType("text/html;charset=utf-8");
+		PrintWriter out = res.getWriter();
 		
 		String userName = req.getParameter("username");
 		String pwd = req.getParameter("password");
@@ -45,9 +48,10 @@ public class RegisterServlet extends HttpServlet {
 		
 		UserDAO userDAO = new UserDAO();
 		
-		if(userDAO.findBy(userName,pwd) != null) {
+		if(userDAO.findByName(userName) != null) {
 			System.out.println("用户已注册！即将跳到登录界面");
-			res.sendRedirect("UserLogin.jsp");
+			out.println("<script>alert(\"用户已注册！去登录界面登陆!\")</script>");
+			res.setHeader("refresh", "0,URL=UserLogin.jsp");
 		}
 		else if(userDAO.insert(user) > 0) {
 			System.out.println("注册成功");

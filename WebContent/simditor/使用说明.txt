@@ -1,0 +1,58 @@
+富文本编辑器使用指南：
+	把上述资源添加到自己项目中
+	
+在需要插入富文本编辑器的页面插入以下代码：
+更多详细文档自行查阅官方文档：https://simditor.tower.im///
+
+<html>
+	<head>
+
+		// 头部加上，注意路径
+
+		<link rel="stylesheet" type="text/css" href="./css/simditor.css" />
+	</head>
+	<body>
+	    <!-- 这里插入富文本编辑器，自己设置大小，不然布局显示可能出现问题 -->
+		<div class="edite-tool">
+            <textarea id="editor" autofocus></textarea>
+        </div>
+		
+		<!-- 引入以下 simditor 文本编辑器需要的js -->
+		<script type="text/javascript" src="./js/jquery.min.js"></script>
+		<script type="text/javascript" src="./js/module.js"></script>
+		<script type="text/javascript" src="./js/hotkeys.js"></script>
+		<script type="text/javascript" src="./js/uploader.js"></script>
+		<script type="text/javascript" src="./js/simditor.js"></script>
+		
+		<script>
+			(function () {
+				$(function () {
+					// 编辑器初始化
+					var editor, toolbar;
+					Simditor.locale = 'zh-CN';
+					toolbar = ['title', 'bold', 'italic', 'underline', 'fontScale', 'color', '|', 'ol', 'ul', 'blockquote', 'code', 'table', '|', 'link', 'image', 'hr', '|', 'indent', 'outdent', 'alignment'];
+					editor = new Simditor({
+						textarea: $('#editor'),
+						placeholder: '开始书写你的 idea ^_^',
+						toolbar: toolbar,
+						pasteImage: true,
+						defaultImage: './images/image.png',
+						upload: {
+							url: 'ImgUpload.action', //文件上传的接口地址
+							params: null, //键值对,指定文件上传接口的额外参数,上传的时候随文件一起提交
+							fileKey: 'fileDataFileName', //服务器端获取文件数据的参数名
+							connectionCount: 3,
+							leaveConfirm: '正在上传文件'
+						}
+					});
+
+					// 测试文本的获取,打印在控制台上，该按钮自行创建
+					$('#publish-article').on('click', function (e) {
+						console.log(editor.getValue());
+					})
+				});
+
+			}).call(this);
+		</script>
+	</body>
+</html>
