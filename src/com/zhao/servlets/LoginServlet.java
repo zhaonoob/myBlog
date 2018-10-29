@@ -8,6 +8,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import com.zhao.dao.UserDAO;
 import com.zhao.module.User;
@@ -34,6 +35,7 @@ public class LoginServlet extends HttpServlet {
 		// TODO Auto-generated method stub
 		req.setCharacterEncoding("utf-8");
 		res.setContentType("text/html;charset=utf-8");
+		HttpSession session = req.getSession();
 		PrintWriter out = res.getWriter();
 		out.println("<script src='layer/jquery-1.10.2.js'></script>");
 		out.println("<script src='layer/layer.js'></script>");
@@ -52,6 +54,7 @@ public class LoginServlet extends HttpServlet {
 				
 				res.sendRedirect("index.jsp");
 			}else {
+				session.setAttribute("existUser", user.getUserName());
 				out.println("<script>layer.alert('密码错误，请重新输入',{'icon': 5})</script>");
 				res.setHeader("refresh", "3,URL=UserLogin.jsp");
 				//res.sendRedirect("UserLogin.jsp");

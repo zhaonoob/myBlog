@@ -25,7 +25,7 @@
 							<div class="layui-form-item">
 								<label class="layui-form-label">用户名</label>
 								<div class="layui-input-inline">
-									<input class="layui-input" type="text" name="username"
+									<input class="layui-input" value="${sessionScope.existUser }" type="text" name="username"
 										required="required" lay-verify="required" placeholder="请输入用户名" />
 								</div>
 							</div>

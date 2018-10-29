@@ -44,16 +44,70 @@
 						<legend>评论</legend>
 					</fieldset>
 					<div class="txt">
-						<textarea id="comment-txt"></textarea>
+						<textarea id="comment-txt" class="layui-hide"></textarea>
 						<button class="layui-btn">回复</button>
 					</div>
-					<ul class="comment-list"></ul>
+					<ul class="comment-list">
+						<li><img src="img/1.jpg">
+						<div>
+								<p class="author">aaa</p>
+								<p class="time">2018-10-27 12:53:58</p>
+							</div>
+							<div class="she-said">dasdasdasd</div></li>
+						<li><img src="img/default.jpg">
+						<div>
+								<p class="author">admin</p>
+								<p class="time">2018-10-27 12:52:22</p>
+							</div>
+							<div class="she-said">dsadasdas</div></li>
+					</ul>
 				</div>
 			</div>
 		</div>
 	</div>
 	<jsp:include page="footer.jsp"></jsp:include>
 	<script src="./js/index.js"></script>
-	<script src="./js/article.js"></script>
+	
+	<script type="text/javascript">
+		layui.use(['layedit', 'layer', 'element'], function(){
+			  const $ = layui.$
+			  const layedit = layui.layedit;
+			  const layer = layui.layer
+
+
+			  const idx = layedit.build('comment-txt', {
+			    tool: [],
+			    height: 160
+			  }); //建立编辑器
+
+			  $(".layui-unselect.layui-layedit-tool").hide()
+
+			  
+
+			  $(".comment button").click(async () => {
+			    let content = layedit.getContent(idx).trim()
+
+			    if(content.length === 0)return layer.msg("评论内容不能为空")
+
+			    const data = {
+			      content,
+			      article: $(".art-title").data("artid")
+			    }
+
+			    $.post("/comment", data, (data) => {
+			      layer.msg(data.msg, {
+			        time: 1000,
+			        end(){
+			          if(data.status === 1){
+			            // 评论成功就重载页面
+			            window.location.reload()
+			          }
+			        }
+			      })
+			    })
+			  })
+			});
+		
+		</script>
 </body>
 </html>
