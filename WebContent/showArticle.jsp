@@ -1,3 +1,5 @@
+<%@page import="com.zhao.module.CommentInfo"%>
+<%@page import="com.zhao.dao.CommentDAO"%>
 <%@page import="com.zhao.module.ArticleInfo"%>
 <%@page import="com.zhao.module.Article"%>
 <%@page import="java.util.List"%>
@@ -23,6 +25,11 @@
 	<%
 		ArticleInfo article = (ArticleInfo)session.getAttribute("showArticle");
 		User user = (User)session.getAttribute("login");
+		
+		CommentDAO commentDAO = new CommentDAO();
+		List<CommentInfo> commentList = commentDAO.findCommentById(article.getArticle_id());
+		session.setAttribute("commentList", commentList);
+		
 	%>
 	<div class="layui-container">
 		<div class="layui-row layui-col-space15">
@@ -43,23 +50,22 @@
 					<fieldset class="text-center">
 						<legend>评论</legend>
 					</fieldset>
-					<div class="txt">
-						<textarea id="comment-txt" class="layui-hide"></textarea>
-						<button class="layui-btn">回复</button>
-					</div>
+					<form action="pub_comment.do?article_id=<%=article.getArticle_id() %>" method="post">
+						<div class="txt">
+							<textarea id="comment-txt" class="layui-hide" name="comment"></textarea>
+							<button class="layui-btn">回复</button>
+						</div>
+					</form>
 					<ul class="comment-list">
-						<li><img src="img/1.jpg">
-						<div>
-								<p class="author">aaa</p>
-								<p class="time">2018-10-27 12:53:58</p>
-							</div>
-							<div class="she-said">dasdasdasd</div></li>
-						<li><img src="img/default.jpg">
-						<div>
-								<p class="author">admin</p>
-								<p class="time">2018-10-27 12:52:22</p>
-							</div>
-							<div class="she-said">dsadasdas</div></li>
+						<c:forEach var="item" items="${commentList}">
+							<li><img src="${item.avator }">
+								<div>
+									<p class="author">${item.userName }</p>
+									<p class="time"><fmt:formatDate value="${item.comment_date}" pattern="yyyy-MM-dd HH:mm:ss"/></p>
+								</div>
+								<div class="she-said">${item.content }</div>
+							</li>
+						</c:forEach>
 					</ul>
 				</div>
 			</div>
@@ -87,7 +93,10 @@
 			  $(".comment button").click(async () => {
 			    let content = layedit.getContent(idx).trim()
 
-			    if(content.length === 0)return layer.msg("评论内容不能为空")
+			    if(content.length === 0){
+			    	layer.msg("评论内容不能为空")
+			    	return false;
+			    }
 
 			    const data = {
 			      content,

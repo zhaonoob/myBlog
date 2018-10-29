@@ -157,6 +157,7 @@ public class ArticleDAO {
 				article.setPub_date(res.getTimestamp("pub_date"));
 				article.setUserName(res.getString("username"));
 				article.setArticletype(res.getString("type"));
+				article.setArticle_id(article_id);
 			}
 			return article;
 
