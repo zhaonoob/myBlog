@@ -1,6 +1,7 @@
 package com.zhao.servlets;
 
 import java.io.IOException;
+import java.io.PrintWriter;
 import java.sql.Timestamp;
 
 import javax.servlet.ServletException;
@@ -35,7 +36,11 @@ public class CommentServlet extends HttpServlet {
 	protected void doPost(HttpServletRequest req, HttpServletResponse res) throws ServletException, IOException {
 		// TODO Auto-generated method stub
 		req.setCharacterEncoding("utf-8");
+		res.setContentType("text/html;charset=utf-8");
 		HttpSession session = req.getSession();
+		PrintWriter out = res.getWriter();
+		out.println("<script src='layer/jquery-1.10.2.js'></script>");
+		out.println("<script src='layer/layer.js'></script>");
 		User user = (User)session.getAttribute("login");
 		
 		String content = req.getParameter("comment");
@@ -54,11 +59,15 @@ public class CommentServlet extends HttpServlet {
 		CommentDAO commentDAO = new CommentDAO();
 		
 		if(commentDAO.insertComment(comment) > 0) {
-			System.out.println("发表评论成功！");
-			res.sendRedirect("showArticle.jsp");
+			//System.out.println("发表评论成功！");
+			out.println("<script>layer.msg('评论成功！',{'icon': 1})</script>");
+			res.setHeader("refresh", "1,URL=showArticle.jsp");
+			//res.sendRedirect("showArticle.jsp");
 		}else {
-			System.out.println("发表评论失败！");
-			res.sendRedirect("showArticle.jsp");
+			//System.out.println("发表评论失败！");
+			out.println("<script>layer.msg('评论失败！',{'icon': 2})</script>");
+			res.setHeader("refresh", "1,URL=showArticle.jsp");
+			//res.sendRedirect("showArticle.jsp");
 		}	
 	}
 }

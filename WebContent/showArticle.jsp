@@ -27,7 +27,7 @@
 		User user = (User)session.getAttribute("login");
 		
 		CommentDAO commentDAO = new CommentDAO();
-		List<CommentInfo> commentList = commentDAO.findCommentById(article.getArticle_id());
+		List<CommentInfo> commentList = commentDAO.findCommentById(article.getId());
 		session.setAttribute("commentList", commentList);
 		
 	%>
@@ -50,7 +50,7 @@
 					<fieldset class="text-center">
 						<legend>评论</legend>
 					</fieldset>
-					<form action="pub_comment.do?article_id=<%=article.getArticle_id() %>" method="post">
+					<form action="pub_comment.do?article_id=<%=article.getId() %>" method="post">
 						<div class="txt">
 							<textarea id="comment-txt" class="layui-hide" name="comment"></textarea>
 							<button class="layui-btn">回复</button>

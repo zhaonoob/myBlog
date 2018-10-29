@@ -48,23 +48,25 @@ public class LoginServlet extends HttpServlet {
 		
 		if(user != null) {
 			if(userDAO.findBy(userName, pwd) != null) {
-				System.out.println("用户"+userName+"登录成功！");
+				//System.out.println("用户"+userName+"登录成功！");
 				req.getSession().setAttribute("login", user);
-				System.out.println(user.toString());
+				//System.out.println(user.toString());
+				out.println("<script>layer.msg('登录成功！',{'icon': 1})</script>");
+				res.setHeader("refresh", "2,URL=index.jsp");
 				
-				res.sendRedirect("index.jsp");
+				//res.sendRedirect("index.jsp");
 			}else {
 				session.setAttribute("existUser", user.getUserName());
-				out.println("<script>layer.alert('密码错误，请重新输入',{'icon': 5})</script>");
-				res.setHeader("refresh", "3,URL=UserLogin.jsp");
+				out.println("<script>layer.msg('密码错误!',{'icon': 2})</script>");
+				res.setHeader("refresh", "2,URL=UserLogin.jsp");
 				//res.sendRedirect("UserLogin.jsp");
 			}
 			
 		}else {
 			out.println("<script>layer.alert('用户不存在，去注册用户！',{'icon': 5})</script>");
 			
-			System.out.println("用户"+userName+"不存在，请注册用户！");
-			res.setHeader("refresh", "3,URL=UserReg.jsp");
+			//System.out.println("用户"+userName+"不存在，请注册用户！");
+			res.setHeader("refresh", "2,URL=UserReg.jsp");
 			//res.sendRedirect("UserReg.jsp");
 		}
 	}

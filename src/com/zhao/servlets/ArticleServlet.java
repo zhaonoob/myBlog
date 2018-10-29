@@ -1,6 +1,7 @@
 package com.zhao.servlets;
 
 import java.io.IOException;
+import java.io.PrintWriter;
 import java.sql.Timestamp;
 
 import javax.servlet.ServletException;
@@ -36,7 +37,9 @@ public class ArticleServlet extends HttpServlet {
 		// TODO Auto-generated method stub
 		req.setCharacterEncoding("utf-8");
 		res.setContentType("text/html;charset=utf-8");
-		
+		PrintWriter out = res.getWriter();
+		out.println("<script src='layer/jquery-1.10.2.js'></script>");
+		out.println("<script src='layer/layer.js'></script>");
 		HttpSession session = req.getSession();
 		User user = (User)session.getAttribute("login");
 		
@@ -57,11 +60,15 @@ public class ArticleServlet extends HttpServlet {
 		article.setArticletype_id(articleDAO.findTypeBy(type).getId());
 		
 		if(articleDAO.insertArticle(article) > 0) {
-			System.out.println("文章发表成功！");
-			res.sendRedirect("index.jsp");
+			//System.out.println("文章发表成功！");
+			out.println("<script>layer.msg('文章发布成功！',{'icon': 6})</script>");
+			res.setHeader("refresh", "1,URL=index.jsp");
+			//res.sendRedirect("index.jsp");
 		}else {
-			System.out.println("文章发表失败！");
-			res.sendRedirect("index.jsp");
+			//System.out.println("文章发表失败！");
+			out.println("<script>layer.msg('文章发布失败！',{'icon': 5})</script>");
+			res.setHeader("refresh", "1,URL=index.jsp");
+			//res.sendRedirect("index.jsp");
 		}
 	}
 

@@ -50,19 +50,23 @@ public class RegisterServlet extends HttpServlet {
 		UserDAO userDAO = new UserDAO();
 		
 		if(userDAO.findByName(userName) != null) {
-			out.println("<script>layer.alert('用户已注册！去登录界面登陆!',{'icon': 5})</script>");
-			res.setHeader("refresh", "3,URL=UserLogin.jsp");
+			out.println("<script>layer.msg('用户已被注册！',{'icon': 5})</script>");
+			res.setHeader("refresh", "2,URL=UserReg.jsp");
 		}
 		else if(userDAO.insert(user) > 0) {
-			System.out.println("注册成功");
+			//System.out.println("注册成功");
 			
 			user = userDAO.findByName(user.getUserName());
 			req.getSession().setAttribute("login", user);
-			System.out.println(user.toString());
-			res.sendRedirect("index.jsp");
+			//System.out.println(user.toString());
+			out.println("<script>layer.msg('注册成功,即将跳转到主界面!',{'icon': 6})</script>");
+			res.setHeader("refresh", "2,URL=index.jsp");
+			//res.sendRedirect("index.jsp");
 		}else {
-			System.out.println("注册失败");
-			res.sendRedirect("UserReg.jsp");
+			//System.out.println("注册失败");
+			out.println("<script>layer.msg('注册失败，请重新填写!',{'icon': 2})</script>");
+			res.setHeader("refresh", "2,URL=UserReg.jsp");
+			//res.sendRedirect("UserReg.jsp");
 		}
 	}
 }

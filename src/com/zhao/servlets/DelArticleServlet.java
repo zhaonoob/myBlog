@@ -8,21 +8,20 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 
-import com.zhao.module.User;
+import com.zhao.dao.ArticleDAO;
 
 /**
- * Servlet implementation class LogoutServlet
+ * Servlet implementation class DelArticleServlet
  */
-@WebServlet("/logout.do")
-public class LogoutServlet extends HttpServlet {
+@WebServlet("/delArticle.do")
+public class DelArticleServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public LogoutServlet() {
+    public DelArticleServlet() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -32,17 +31,24 @@ public class LogoutServlet extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest req, HttpServletResponse res) throws ServletException, IOException {
 		// TODO Auto-generated method stub
+		req.setCharacterEncoding("utf-8");
 		res.setContentType("text/html;charset=utf-8");
 		PrintWriter out = res.getWriter();
 		out.println("<script src='layer/jquery-1.10.2.js'></script>");
 		out.println("<script src='layer/layer.js'></script>");
-		HttpSession session = req.getSession();
-		User user = (User)session.getAttribute("login");
-		//System.out.println("用户" + user.getUserName() + "已退出登录！");
-		session.invalidate();
-		out.println("<script>layer.msg('注销成功！',{'icon': 6})</script>");
-		res.setHeader("refresh", "1,URL=index.jsp");
-		//res.sendRedirect("index.jsp");
+		int article_id = Integer.parseInt(req.getParameter("article_id"));
+		ArticleDAO articleDAO = new ArticleDAO();
+		
+		if(articleDAO.delArticleById(article_id) > 0) {
+			out.println("<script>layer.msg('删除成功！',{'icon': 6})</script>");
+			res.setHeader("refresh", "1,URL=article.jsp");
+			//System.out.println("删除文章成功！");
+		}else {
+			//System.out.println("删除文章失败！");
+			out.println("<script>layer.msg('删除失败！',{'icon': 5})</script>");
+			res.setHeader("refresh", "1,URL=article.jsp");
+			//res.sendRedirect("article.jsp");
+		}
 	}
 
 }

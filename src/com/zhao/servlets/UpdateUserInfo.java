@@ -63,11 +63,13 @@ public class UpdateUserInfo extends HttpServlet {
 			newUser.setInfo(info);
 			
 			if(userDAO.update(newUser) > 0) {
-				res.sendRedirect("user.jsp");
+				out.println("<script>layer.msg('修改成功!',{'icon': 6})</script>");
+				res.setHeader("refresh", "1,URL=user.jsp");
+				//res.sendRedirect("user.jsp");
 				session.setAttribute("login", newUser);
 			}else {
-				System.out.println("修改失败");
-				res.sendRedirect("index.jsp");
+				out.println("<script>layer.msg('修改失败!',{'icon': 5})</script>");
+				res.setHeader("refresh", "1,URL=index.jsp");
 			}
 		}
 		else if(userDAO.findByName(userName) == null) {		
@@ -80,15 +82,19 @@ public class UpdateUserInfo extends HttpServlet {
 			newUser.setInfo(info);
 			
 			if(userDAO.update(newUser) > 0) {
-				res.sendRedirect("user.jsp");
+				out.println("<script>layer.msg('修改成功!',{'icon': 6})</script>");
+				res.setHeader("refresh", "1,URL=user.jsp");
+				//res.sendRedirect("user.jsp");
 				session.setAttribute("login", newUser);
 			}else {
-				System.out.println("修改失败");
-				res.sendRedirect("index.jsp");
+				out.println("<script>layer.msg('修改失败!',{'icon': 5})</script>");
+				res.setHeader("refresh", "1,URL=index.jsp");
+				//System.out.println("修改失败");
+				//res.sendRedirect("index.jsp");
 			}
 		}else {
-			out.println("<script>layer.alert('用户名已被占用，请重新输入!',{'icon': 5})</script>");
-			res.setHeader("refresh", "3,URL=user.jsp");
+			out.println("<script>layer.msg('用户名已被占用，请重新输入!',{'icon': 2})</script>");
+			res.setHeader("refresh", "2,URL=user.jsp");
 		}	
 	}
 }

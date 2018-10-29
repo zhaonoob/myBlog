@@ -45,26 +45,25 @@ public class UpdatePwd extends HttpServlet {
 		String oldPwd = req.getParameter("oldPassword");
 		out.println("<script src='layer/jquery-1.10.2.js'></script>");
 		out.println("<script src='layer/layer.js'></script>");
-		if(!oldPwd.equalsIgnoreCase(user.getPwd())) {
-			out.println("<script>layer.alert('当前密码错误',{'icon': 5})</script>");
-			res.setHeader("refresh", "1,URL=UpdatePwd.jsp");
+		
+		String newPwd = req.getParameter("password");
+		
+		User newUser = new User();
+		newUser.setPwd(newPwd);
+		newUser.setId(uid);
+		
+		UserDAO userDAO = new UserDAO();
+		if(userDAO.updatePwd(newUser) > 0) {
+			session.invalidate();
+			out.println("<script>layer.msg('修改成功，请重新登陆！',{'icon': 6})</script>");
+			res.setHeader("refresh", "2,URL=UserLogin.jsp");
+			//res.sendRedirect("UserLogin.jsp");
 		}else {
-			String newPwd = req.getParameter("password");
-			
-			User newUser = new User();
-			newUser.setPwd(newPwd);
-			newUser.setId(uid);
-			
-			UserDAO userDAO = new UserDAO();
-			if(userDAO.updatePwd(newUser) > 0) {
-				session.invalidate();
-				out.println("<script>layer.alert('修改成功，请重新登陆！',{'icon': 6})</script>");
-				res.setHeader("refresh", "3,URL=UserLogin.jsp");
-				//res.sendRedirect("UserLogin.jsp");
-			}else {
-				System.out.println("修改密码失败！");
-				res.sendRedirect("index.jsp");
-			}
+			//System.out.println("修改密码失败！");
+			out.println("<script>layer.msg('修改失败！',{'icon': 2})</script>");
+			res.setHeader("refresh", "1,URL=index.jsp");
+			//res.sendRedirect("index.jsp");
 		}
+		
 	}
 }

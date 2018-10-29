@@ -7,7 +7,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.zhao.jdbc.DBConnection;
-import com.zhao.module.ArticleInfo;
 import com.zhao.module.Comment;
 import com.zhao.module.CommentInfo;
 
@@ -75,4 +74,31 @@ public class CommentDAO {
 		}
 	}
 
+	// 根据文章编号统计评论数量
+	public int findCommentNumById(int article_id) {
+		Connection con = null;
+		PreparedStatement pest = null;
+		ResultSet res = null;
+
+		try {
+			con = DBConnection.getConnection();
+			String sql = "select count(1) rec from t_comment where article_id = ?";
+			pest = con.prepareStatement(sql);
+			pest.setInt(1, article_id);
+
+			res = pest.executeQuery();
+			 int rowCount = 0;  
+			    while (res.next()) {  
+			    	rowCount = res.getInt("rec");  
+			}  
+			return rowCount;
+
+		} catch (Exception e) {
+			// TODO: handle exception
+			e.printStackTrace();
+			return 0;
+		} finally {
+			DBConnection.close(con, pest, res);
+		}
+	}
 }

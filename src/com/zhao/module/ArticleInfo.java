@@ -6,20 +6,20 @@ import java.sql.Timestamp;
 @SuppressWarnings("serial")
 public class ArticleInfo implements Serializable {
 	private int id;
+	private int count;
 	private String title;
 	private String content;
 	private Timestamp pub_date;
 	private String userName;
 	private String articletype;
 	private String avator;
-	private int article_id;
 
-	public int getArticle_id() {
-		return article_id;
+	public int getCount() {
+		return count;
 	}
 
-	public void setArticle_id(int article_id) {
-		this.article_id = article_id;
+	public void setCount(int count) {
+		this.count = count;
 	}
 
 	public int getId() {

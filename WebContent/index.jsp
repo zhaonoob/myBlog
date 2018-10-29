@@ -19,9 +19,9 @@
 <body>
 	<%
 		ArticleDAO articleDAO = new ArticleDAO();
-		List<ArticleInfo> articleList = articleDAO.findAll();
+		List<ArticleInfo> allArticleList = articleDAO.findAll();
 		
-		session.setAttribute("articleList", articleList);
+		session.setAttribute("allArticleList", allArticleList);
 	%>
 	<jsp:include page="nav.jsp"></jsp:include>
 	<div class="blog-panel">
@@ -49,7 +49,7 @@
 		<div class="layui-row layui-col-space15">
 			<div class="layui-col-md8">
 				<ul class="article-list">
-					<c:forEach var="item" items="${articleList}">
+					<c:forEach var="item" items="${allArticleList}">
 						<li>
 							<a class="list-face">
 								<img
@@ -65,7 +65,7 @@
 								<span>
 									<fmt:formatDate value="${item.pub_date}" pattern="yyyy-MM-dd HH:mm:ss"/>
 								</span>
-								<span class="list-reply"><i class="layui-icon layui-icon-file-b" title="评论"></i>0</span>
+								<span class="list-reply"><i class="layui-icon layui-icon-file-b" title="评论"></i>${item.count }</span>
 							</div>
 						</li>
 					</c:forEach>

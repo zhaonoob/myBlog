@@ -96,7 +96,8 @@
     </div>
   </div>
   <script>layui.use(['element','form'], function(){
-  var element = layui.element;
+  const element = layui.element;
+  const form = layui.form;
   const $ = layui.$
 //自定义验证规则
   form.verify({
