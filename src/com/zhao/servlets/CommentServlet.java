@@ -43,31 +43,37 @@ public class CommentServlet extends HttpServlet {
 		out.println("<script src='layer/layer.js'></script>");
 		User user = (User)session.getAttribute("login");
 		
-		String content = req.getParameter("comment");
-		int user_id = user.getId();
-		int article_id = Integer.parseInt(req.getParameter("article_id"));
-		
-		java.util.Date now = new java.util.Date();
-		Timestamp date = new Timestamp(now.getTime());
-		
-		Comment comment = new Comment();
-		comment.setContent(content);
-		comment.setTime(date);
-		comment.setUser_id(user_id);
-		comment.setArticle_id(article_id);
-		
-		CommentDAO commentDAO = new CommentDAO();
-		
-		if(commentDAO.insertComment(comment) > 0) {
-			//System.out.println("发表评论成功！");
-			out.println("<script>layer.msg('评论成功！',{'icon': 1})</script>");
-			res.setHeader("refresh", "1,URL=showArticle.jsp");
-			//res.sendRedirect("showArticle.jsp");
+		if(user != null) {
+			String content = req.getParameter("comment");
+			int user_id = user.getId();
+			int article_id = Integer.parseInt(req.getParameter("article_id"));
+			
+			java.util.Date now = new java.util.Date();
+			Timestamp date = new Timestamp(now.getTime());
+			
+			Comment comment = new Comment();
+			comment.setContent(content);
+			comment.setTime(date);
+			comment.setUser_id(user_id);
+			comment.setArticle_id(article_id);
+			
+			CommentDAO commentDAO = new CommentDAO();
+			
+			if(commentDAO.insertComment(comment) > 0) {
+				//System.out.println("发表评论成功！");
+				out.println("<script>layer.msg('评论成功！',{'icon': 1})</script>");
+				res.setHeader("refresh", "1,URL=showArticle.jsp");
+				//res.sendRedirect("showArticle.jsp");
+			}else {
+				//System.out.println("发表评论失败！");
+				out.println("<script>layer.msg('评论失败！',{'icon': 2})</script>");
+				res.setHeader("refresh", "1,URL=showArticle.jsp");
+				//res.sendRedirect("showArticle.jsp");
+			}	
 		}else {
-			//System.out.println("发表评论失败！");
-			out.println("<script>layer.msg('评论失败！',{'icon': 2})</script>");
-			res.setHeader("refresh", "1,URL=showArticle.jsp");
-			//res.sendRedirect("showArticle.jsp");
-		}	
+			out.println("<script>layer.msg('登陆后才能评论！',{'icon': 2})</script>");
+			res.setHeader("refresh", "1,URL=UserLogin.jsp");
+		}
+		
 	}
 }

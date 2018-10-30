@@ -217,15 +217,20 @@ public class ArticleDAO {
 		Connection con = null;
 		PreparedStatement pest = null;
 
+		CommentDAO commentDAO = new CommentDAO();
 		try {
 			con = DBConnection.getConnection();
 			String sql = "DELETE FROM t_article WHERE article_id = ?";
 			pest = con.prepareStatement(sql);
 			pest.setInt(1, article_id);
 
-			int row = pest.executeUpdate();
-
-			return row;
+			if(commentDAO.delAllCommentById(article_id) > 0) {
+				int row = pest.executeUpdate();
+				return row;
+			}else {
+				return 0;
+			}
+			
 
 		} catch (Exception e) {
 			// TODO: handle exception

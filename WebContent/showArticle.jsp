@@ -27,8 +27,8 @@
 		User user = (User)session.getAttribute("login");
 		
 		CommentDAO commentDAO = new CommentDAO();
-		List<CommentInfo> commentList = commentDAO.findCommentById(article.getId());
-		session.setAttribute("commentList", commentList);
+		List<CommentInfo> allcommentList = commentDAO.findCommentById(article.getId());
+		session.setAttribute("allcommentList", allcommentList);
 		
 	%>
 	<div class="layui-container">
@@ -57,7 +57,7 @@
 						</div>
 					</form>
 					<ul class="comment-list">
-						<c:forEach var="item" items="${commentList}">
+						<c:forEach var="item" items="${allcommentList}">
 							<li><img src="${item.avator }">
 								<div>
 									<p class="author">${item.userName }</p>

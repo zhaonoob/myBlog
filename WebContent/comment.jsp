@@ -1,3 +1,7 @@
+<%@page import="com.zhao.module.CommentInfo"%>
+<%@page import="java.util.List"%>
+<%@page import="com.zhao.dao.CommentDAO"%>
+<%@page import="com.zhao.module.User"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
@@ -37,6 +41,13 @@
 </style>
 </head>
 <body>
+<%
+	User user = (User)session.getAttribute("login");
+	CommentDAO commentDAO = new CommentDAO();
+	List<CommentInfo> commentList = commentDAO.findCommentByUserName(user.getUserName());
+	
+	session.setAttribute("commentList", commentList);
+%>
 	<jsp:include page="sidebar.jsp"></jsp:include>
 	<!-- 后台管理主体部分-->
 	<div class="layui-body">
@@ -72,37 +83,20 @@
 				<table cellspacing="0" cellpadding="0" border="0"
 					class="layui-table">
 					<tbody>
-						<tr data-index="0" class="">
-							<td data-field="article" align="center"
-								data-content="[object Object]"><div
-									class="layui-table-cell laytable-cell-1-article">ggrgr</div></td>
-							<td data-field="content" align="center"><div
-									class="layui-table-cell laytable-cell-1-content">dasdasdasd</div></td>
-							<td data-field="created" align="center"
-								data-content="2018-10-27T04:53:58.035Z"><div
-									class="layui-table-cell laytable-cell-1-created">2018/10/27
-									下午12:53:58</div></td>
-							<td data-field="3" align="center" data-off="true"><div
-									class="layui-table-cell laytable-cell-1-3">
-									<a class="layui-btn layui-btn-danger layui-btn-xs"
-										lay-event="del">删除</a>
-								</div></td>
-						</tr>
 						<c:forEach var="item" items="${sessionScope.commentList }">
 							<tr data-index="0" class="">
 								<td data-field="article" align="center"
 									data-content="[object Object]"><div
-										class="layui-table-cell laytable-cell-1-article">ggrgr</div></td>
+										class="layui-table-cell laytable-cell-1-article"><a href="showArticle.do?id=${item.article_id }">${item.title }</a></div></td>
 								<td data-field="content" align="center"><div
-										class="layui-table-cell laytable-cell-1-content">dasdasdasd</div></td>
+										class="layui-table-cell laytable-cell-1-content">${item.content }</div></td>
 								<td data-field="created" align="center"
 									data-content="2018-10-27T04:53:58.035Z"><div
-										class="layui-table-cell laytable-cell-1-created">2018/10/27
-										下午12:53:58</div></td>
+										class="layui-table-cell laytable-cell-1-created"><fmt:formatDate value="${item.comment_date}" pattern="yyyy-MM-dd HH:mm:ss"/></div></td>
 								<td data-field="3" align="center" data-off="true"><div
 										class="layui-table-cell laytable-cell-1-3">
 										<a class="layui-btn layui-btn-danger layui-btn-xs"
-											lay-event="del">删除</a>
+											lay-event="del" href="delComment.do?c_id=${item.comment_id }">删除</a>
 									</div></td>
 							</tr>
 						</c:forEach>
