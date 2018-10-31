@@ -51,7 +51,7 @@ public class RegisterServlet extends HttpServlet {
 		
 		if(userDAO.findByName(userName) != null) {
 			out.println("<script>layer.msg('用户已被注册！',{'icon': 5})</script>");
-			res.setHeader("refresh", "2,URL=UserReg.jsp");
+			res.setHeader("refresh", "1,URL=UserReg.jsp");
 		}
 		else if(userDAO.insert(user) > 0) {
 			//System.out.println("注册成功");

@@ -69,7 +69,7 @@
                   <input name="avator" lay-verify="required" id="LAY_avatarSrc" placeholder="图片地址" value="<%=user.getAvator() %>" class="layui-input">
                 </div>
                 <div class="layui-input-inline layui-btn-container" style="width: auto;">
-                  <button type="button" class="layui-btn layui-btn-primary" id="LAY_avatarUpload">
+                  <button type="button" class="layui-btn layui-btn-primary" id="LAY_avatarUpload" name="uploadImg">
                     <i class="layui-icon">&#xe67c;</i>上传图片
                   </button>
                   <img alt="avator" src="<%=user.getAvator() %>" class="user-avator layui-nav-img">
@@ -95,9 +95,10 @@
       </div>
     </div>
   </div>
-  <script>layui.use(['element','form'], function(){
+  <script>layui.use(['element','form','upload'], function(){
   const element = layui.element;
   const form = layui.form;
+  const upload = layui.upload;
   const $ = layui.$
 //自定义验证规则
   form.verify({
@@ -126,6 +127,17 @@
 		  }
 	  }
   }); 
+  // 图片上传
+  var uploadInst = upload.render({
+	    elem: '#LAY_avatarUpload' //绑定元素
+	    ,url: 'uploadImage.do' //上传接口
+	    ,done: function(res){
+	      //上传完毕回调
+	    }
+	    ,error: function(){
+	      //请求异常回调
+	    }
+	  });
   $("a").each((i, v) => {
     const a_href = $(v).prop('href')
 

@@ -41,7 +41,7 @@ public class LogoutServlet extends HttpServlet {
 		//System.out.println("用户" + user.getUserName() + "已退出登录！");
 		session.invalidate();
 		out.println("<script>layer.msg('注销成功！',{'icon': 6})</script>");
-		res.setHeader("refresh", "1,URL=index.jsp");
+		res.setHeader("refresh", "2,URL=index.jsp");
 		//res.sendRedirect("index.jsp");
 	}
 

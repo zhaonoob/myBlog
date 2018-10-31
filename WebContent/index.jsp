@@ -80,6 +80,41 @@
 					</div>
 				</div>
 			</div>
+			<div class="layui-col-md4">
+				<div class="layui-card">
+					<div class="layui-card-header">文章分类</div>
+					<div class="layui-card-body">
+						<ul>
+							<li><a href="#">Web</a></li>
+							<li><a href="#">大数据</a></li>
+							<li><a href="#">Java</a></li>
+							<li><a href="#">Python</a></li>
+							<li><a href="#">经验分享</a></li>
+						</ul>
+					</div>
+				</div>
+			</div>
+			<div class="layui-col-md4">
+				<div class="layui-card">
+					<div class="layui-card-header">心情随笔</div>
+					<div class="layui-card-body">
+						思想上的缺陷和弱点正如身体上的创伤，就算用尽一切办法将其治愈，仍然会留下疤痕。
+					</div>
+				</div>
+			</div>
+			<div class="layui-col-md4">
+				<div class="layui-card">
+					<div class="layui-card-header">友情链接</div>
+					<div class="layui-card-body">
+						<ul>
+							<li><a href="https://juejin.im/timeline">掘金</a></li>
+							<li><a href="https://www.oschina.net/">开源中国</a></li>
+							<li><a href="http://www.ruanyifeng.com/blog/">阮一峰的网络日志</a></li>
+							<li><a href="https://fly.layui.com/">Fly社区</a></li>
+						</ul>
+					</div>
+				</div>
+			</div>
 		</div>
 	</div>
 	<jsp:include page="footer.jsp"></jsp:include>
